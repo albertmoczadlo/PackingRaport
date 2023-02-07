@@ -1,7 +1,18 @@
+using Microsoft.EntityFrameworkCore;
+using PackingRaport.Persistance.Context;
+using Microsoft.AspNetCore.Identity;
+using PackingRaport.Persistance.Context;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<RaportDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("PackingRaportConection")));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<RaportDbContext>();
 
 var app = builder.Build();
 
@@ -17,6 +28,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 
