@@ -9,8 +9,12 @@ namespace PackingRaport.Domain.Models
     public class Raport
     {
         public int Id { get; set; }
+        public DateTime StartProductionTime { get; set; }
+        public DateTime EndProductionTime { get; set; }
         public string UserId { get; set; }
 
         public User User { get; set; }
+        public ICollection<Product> Products { get; set; }
+        public ICollection<Bath> Baths { get; set; }
     }
 }

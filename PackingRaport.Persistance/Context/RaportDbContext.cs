@@ -15,6 +15,9 @@ namespace PackingRaport.Persistance.Context
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Raport> Raports { get; set; }
+        public DbSet<Container> Containers { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Tank> Tanks { get; set; }
 
         public RaportDbContext(DbContextOptions<RaportDbContext> options):base(options)
         {
@@ -24,6 +27,13 @@ namespace PackingRaport.Persistance.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            {
+                builder.Entity<Raport>()
+                    .HasOne<User>(r => r.User)
+                    .WithMany(r => r.Raports)
+                    .HasForeignKey(u => u.UserId);
+            }
         }
 
         public class AppUserEntityConfiguration : IEntityTypeConfiguration<User>
