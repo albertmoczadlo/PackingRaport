@@ -34,6 +34,25 @@ namespace PackingRaport.Persistance.Context
                     .WithMany(r => r.Raports)
                     .HasForeignKey(u => u.UserId);
             }
+
+            {
+                builder.Entity<Product>()
+                    .HasOne<Raport>(r => r.Raports)
+                    .WithMany(r => r.Products)
+                    .HasForeignKey(u => u.RaportId);
+
+                builder.Entity<Container>()
+                    .HasOne<Raport>(r => r.Raports)
+                    .WithMany(r => r.Containers)
+                    .HasForeignKey(u => u.RaportId);
+            }
+
+            {
+                builder.Entity<Tank>()
+                    .HasOne<Container>(r => r.Containers)
+                    .WithMany(r => r.Tanks)
+                    .HasForeignKey(u => u.ContainerId);
+            }
         }
 
         public class AppUserEntityConfiguration : IEntityTypeConfiguration<User>

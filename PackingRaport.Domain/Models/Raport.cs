@@ -15,6 +15,6 @@ namespace PackingRaport.Domain.Models
 
         public User User { get; set; }
         public ICollection<Product> Products { get; set; }
-        public ICollection<Bath> Baths { get; set; }
+        public ICollection<Container> Containers { get; set; }
     }
 }
