@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PackingRaport.Persistance.Context;
 using Microsoft.AspNetCore.Identity;
+using PackingRaport.Domain.Models;
 using PackingRaport.Persistance.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +12,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<RaportDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("PackingRaportConection")));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<RaportDbContext>();
 
 var app = builder.Build();
@@ -35,5 +36,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
 
 app.Run();

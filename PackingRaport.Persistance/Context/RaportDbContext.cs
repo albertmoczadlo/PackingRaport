@@ -11,7 +11,7 @@ using PackingRaport.Domain.Models;
 
 namespace PackingRaport.Persistance.Context
 {
-    public class RaportDbContext: IdentityDbContext
+    public class RaportDbContext: IdentityDbContext<User>
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Raport> Raports { get; set; }
