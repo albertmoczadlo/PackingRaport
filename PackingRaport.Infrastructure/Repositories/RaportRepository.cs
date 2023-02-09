@@ -10,11 +10,11 @@ using PackingRaport.Persistance.Context;
 
 namespace PackingRaport.Infrastructure.InterfaceRepository
 {
-    public class RaportRepositories : IRaportRepositories
+    public class RaportRepository : IRaportRepositories
     {
         private readonly RaportDbContext _context;
 
-        public RaportRepositories(RaportDbContext context)
+        public RaportRepository(RaportDbContext context)
         {
             _context=context;
         }
@@ -30,5 +30,25 @@ namespace PackingRaport.Infrastructure.InterfaceRepository
 
             return raports;
         }
+
+        public async Task<Raport> GetById(int id)
+        {
+            var raport =await _context.Raports.FindAsync(id);
+
+            if (raport == null)
+            {
+                throw new ArgumentNullException("Nie znaleziono raportu o podanym identyfikatorze.", nameof(id));
+            }
+
+            return raport;
+        }
+
+        public async Task AddRaport(Raport raport)
+        {
+            await _context.Raports.AddAsync(raport);
+            await _context.SaveChangesAsync();
+        }
+
+
     }
 }

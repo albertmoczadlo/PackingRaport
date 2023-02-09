@@ -17,7 +17,7 @@ builder.Services.AddDbContext<RaportDbContext>(options =>
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<RaportDbContext>();
 
-builder.Services.AddTransient<IRaportRepositories, RaportRepositories>();
+builder.Services.AddTransient<IRaportRepositories, RaportRepository>();
 
 var app = builder.Build();
 
