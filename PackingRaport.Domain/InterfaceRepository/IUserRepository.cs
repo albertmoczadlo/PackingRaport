@@ -7,10 +7,8 @@ using PackingRaport.Domain.Models;
 
 namespace PackingRaport.Domain.InterfaceRepository
 {
-    public interface IRaportRepositories
+    public interface IUserRepository
     {
-        Task<IEnumerable<Raport>> GetAllRaports();
-        Task<Raport> GetById(int id);
-        Task AddRaport(Raport raport);
+        User GetUserById(string id);
     }
 }
