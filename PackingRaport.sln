@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackingRaport", "PackingRaport\PackingRaport.csproj", "{1AF78C57-FA32-4C69-98B6-B0070A396B46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackingRaport", "PackingRaport\PackingRaport.csproj", "{1AF78C57-FA32-4C69-98B6-B0070A396B46}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{F391B88A-DE4B-469E-B322-E37C4037B229}"
 EndProject
@@ -17,15 +17,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B4CCE196
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{47B12564-3BE7-4CDE-AAFD-5CF4AD59B2BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackingRaport.Domain", "PackingRaport.Domain\PackingRaport.Domain.csproj", "{9680AC8C-0E66-48DA-BD4F-742306F249EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackingRaport.Domain", "PackingRaport.Domain\PackingRaport.Domain.csproj", "{9680AC8C-0E66-48DA-BD4F-742306F249EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackingRaport.Infrastructure", "PackingRaport.Infrastructure\PackingRaport.Infrastructure.csproj", "{58626818-0343-433B-B3CD-D8703B23AF74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackingRaport.Infrastructure", "PackingRaport.Infrastructure\PackingRaport.Infrastructure.csproj", "{58626818-0343-433B-B3CD-D8703B23AF74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackingRaport.Persistance", "PackingRaport.Persistance\PackingRaport.Persistance.csproj", "{6EB25557-1117-47A8-8A15-F7108AC0DAED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackingRaport.Persistance", "PackingRaport.Persistance\PackingRaport.Persistance.csproj", "{6EB25557-1117-47A8-8A15-F7108AC0DAED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackingRaport.Services", "PackingRaport.Services\PackingRaport.Services.csproj", "{00C22C31-3BCD-4B24-9731-E6B1BE2E381B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackingRaport.Services", "PackingRaport.Services\PackingRaport.Services.csproj", "{00C22C31-3BCD-4B24-9731-E6B1BE2E381B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackingRaport.Tests", "PackingRaport.Tests\PackingRaport.Tests.csproj", "{0ABBBC4E-6055-428C-B656-F65C57776399}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackingRaport.Tests", "PackingRaport.Tests\PackingRaport.Tests.csproj", "{0ABBBC4E-6055-428C-B656-F65C57776399}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{159CBFD3-2383-4564-9767-C37E319DA5DF}"
 EndProject

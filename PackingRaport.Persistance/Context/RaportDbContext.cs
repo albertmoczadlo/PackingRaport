@@ -24,6 +24,14 @@ namespace PackingRaport.Persistance.Context
             
         }
 
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(
+        //        @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Mlekpol;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+
+
+        //}
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -53,6 +61,15 @@ namespace PackingRaport.Persistance.Context
                     .WithMany(r => r.Tanks)
                     .HasForeignKey(u => u.ContainerId);
             }
+
+            {
+                builder.Entity<Raport>()
+                    .Property(t => t.StartProductionTime)
+                    .IsRequired();
+                builder.Entity<Raport>()
+                    .Property(e => e.EndProductionTime)
+                    .IsRequired();
+            }
         }
 
         public class AppUserEntityConfiguration : IEntityTypeConfiguration<User>
@@ -61,8 +78,8 @@ namespace PackingRaport.Persistance.Context
             public void Configure(EntityTypeBuilder<User> builder)
             {
 
-                builder.Property(p => p.Name).HasMaxLength(50);
-                builder.Property(p => p.Surname).HasMaxLength(50);
+                builder.Property(p => p.Name).HasMaxLength(20);
+                builder.Property(p => p.Surname).HasMaxLength(20);
                 //builder.Property(c => c.Id).HasColumnName("ID").IsRequired();
             }
         }
