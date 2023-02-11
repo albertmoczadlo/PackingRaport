@@ -43,10 +43,10 @@ namespace PackingRaport.Infrastructure.InterfaceRepository
             return raport;
         }
 
-        public async Task AddRaport(Raport raport)
+        public void AddRaport(Raport raport)
         {
-            await _context.Raports.AddAsync(raport);
-            await _context.SaveChangesAsync();
+            _context.Raports.Add(raport);
+            _context.SaveChanges();
         }
 
 

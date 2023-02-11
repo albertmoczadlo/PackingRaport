@@ -12,11 +12,13 @@ namespace PackingRaport.Controllers
     {
         private readonly IRaportRepositories _raportRepositories;
         private readonly IUserRepository _userRepository;
+        private readonly IProductRepository _productRepository;
 
-        public RaportController(IRaportRepositories raportRepositories, IUserRepository userRepository)
+        public RaportController(IRaportRepositories raportRepositories, IUserRepository userRepository, IProductRepository productRepository)
         {
                 _raportRepositories = raportRepositories;
                 _userRepository = userRepository;
+                _productRepository = productRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -36,9 +38,8 @@ namespace PackingRaport.Controllers
             List<SelectListItem> userListName = new List<SelectListItem>();
 
             User user = _userRepository.GetUserById(id);
-            
+          
             userListName.Add(new SelectListItem(user.Name + " " + user.Surname, user.Id ));
-            
 
             ViewBag.UserListName = userListName;
 
