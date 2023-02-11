@@ -19,7 +19,9 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
     .AddEntityFrameworkStores<RaportDbContext>();
 
 builder.Services.AddTransient<IRaportRepositories, RaportRepository>()
-                .AddTransient<IUserRepository, UserRepository>();
+                .AddTransient<IUserRepository, UserRepository>()
+                .AddTransient<IProductRepository, ProductRepository>();
+                
 
 var app = builder.Build();
 
