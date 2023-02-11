@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PackingRaport.Domain.InterfaceRepository;
 using PackingRaport.Domain.Models;
+using PackingRaport.Infrastructure.InterfaceRepository;
 using System.Security.Claims;
 
 namespace PackingRaport.Controllers
@@ -27,6 +29,19 @@ namespace PackingRaport.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+            string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var listUsers = _userRepository.GetAllUsers();
+
+            List<SelectListItem> userListName = new List<SelectListItem>();
+
+            User user = _userRepository.GetUserById(id);
+            
+            userListName.Add(new SelectListItem(user.Name + " " + user.Surname, user.Id ));
+            
+
+            ViewBag.UserListName = userListName;
+
             return View();
         }
 
@@ -44,5 +59,8 @@ namespace PackingRaport.Controllers
 
             return RedirectToAction("Index");
         }
+
+
+
     }
 }

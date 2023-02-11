@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PackingRaport.Domain.InterfaceRepository;
 using PackingRaport.Domain.Models;
@@ -17,6 +18,14 @@ namespace PackingRaport.Infrastructure.Repositories
         public UserRepository(RaportDbContext context)
         {
             _context=context;
+        }
+
+
+        public IEnumerable<User> GetAllUsers()
+        {
+            var users = _context.Users.ToList();
+
+            return users;
         }
 
         public User GetUserById(string id)

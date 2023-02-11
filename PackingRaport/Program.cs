@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using PackingRaport.Domain.InterfaceRepository;
 using PackingRaport.Domain.Models;
 using PackingRaport.Infrastructure.InterfaceRepository;
+using PackingRaport.Infrastructure.Repositories;
 using PackingRaport.Persistance.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +18,8 @@ builder.Services.AddDbContext<RaportDbContext>(options =>
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<RaportDbContext>();
 
-builder.Services.AddTransient<IRaportRepositories, RaportRepository>();
+builder.Services.AddTransient<IRaportRepositories, RaportRepository>()
+                .AddTransient<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
