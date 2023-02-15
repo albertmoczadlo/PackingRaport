@@ -5,6 +5,7 @@ using PackingRaport.Domain.InterfaceRepository;
 using PackingRaport.Domain.Models;
 using PackingRaport.Infrastructure.InterfaceRepository;
 using System.Security.Claims;
+using PackingRaport.Domain.ViewModels;
 
 namespace PackingRaport.Controllers
 {
@@ -48,15 +49,27 @@ namespace PackingRaport.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateConfirmed(Raport raport)
+        public async Task<IActionResult> CreateConfirmed(RaportViewModel raport, int productIndex)
         {
             string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var usId = _userRepository.GetUserById(id);
+            var user = _userRepository.GetUserById(id);
 
-            raport.UserId = usId.Id;
+            //raport.User = user;
 
-            _raportRepositories.AddRaport(raport);
+            Raport tRaport = new Raport();
+
+            tRaport.User = user;
+
+            foreach (var product in raport.Products)
+            {
+                tRaport.Products.Add(_productRepository.GetById(product));
+            }
+
+            tRaport.EndProductionTime = raport.EndProductionTime;
+            
+            
+            _raportRepositories.AddRaport(tRaport);
 
             return RedirectToAction("Index");
         }

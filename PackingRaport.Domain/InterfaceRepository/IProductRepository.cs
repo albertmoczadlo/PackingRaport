@@ -10,5 +10,6 @@ namespace PackingRaport.Domain.InterfaceRepository
     public interface IProductRepository
     {
         IEnumerable<Product> GetProducts();
+        Product GetById(int id);
     }
 }

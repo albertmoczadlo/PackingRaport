@@ -24,5 +24,12 @@ namespace PackingRaport.Infrastructure.Repositories
 
             return products;
         }
+
+        public Product GetById(int id)
+        {
+            var product =  _context.Products.Find(id);
+
+            return product;
+        }
     }
 }
