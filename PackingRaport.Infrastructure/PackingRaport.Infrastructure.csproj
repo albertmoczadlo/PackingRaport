@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PackingRaport.Domain\PackingRaport.Domain.csproj" />
     <ProjectReference Include="..\PackingRaport.Persistance\PackingRaport.Persistance.csproj" />
   </ItemGroup>

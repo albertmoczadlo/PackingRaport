@@ -18,12 +18,11 @@
             @*<th>Id</th>*@
             <th scope ="col">Imie</th>
             <th scope="col">Nazwisko</th>
+            <th scope="col">Produkt</th>
             <th scope="col">Start Produkcji</th>
             <th scope="col">Koniec Produkcji</th>
-            <th scope="col">Produkt</th>
-            <th scope="col">Numer zbiornika</th>
-            <th scope="col">Wanna</th>
-            <th scope="col">Kocioł</th>
+            <th scope="col">Zbiornika</th>
+            
         </tr>
     </thead>
     <tbody>
@@ -33,47 +32,11 @@
                 @*<td>@raport.Id</td>*@
                 <td>@raport.User.Name</td>
                 <td>@raport.User.Surname</td>
+                <td>@raport.Product.ProductName</td>
                 <td>@raport.StartProductionTime</td>
                 <td>@raport.EndProductionTime</td>
-
-                <td>
-                    @foreach (var product in raport.Products)
-                    {
-                        @product.ProductName
-
-                        <br />
-                    }
-                </td>
-                <td>
-                    @foreach (var container in raport.Containers)
-                    {
-                        @container.NumberContainer
-
-                        <br />
-                    }
-                </td>
-                <td>
-                    @foreach (var container in raport.Containers)
-                    {
-                        @foreach (var tank in container.Tanks)
-                        {
-                            @tank.Bath
-
-                            <br />
-                        }
-                    }
-                </td>
-                <td>
-                    @foreach (var container in raport.Containers)
-                    {
-                        @foreach (var tank in container.Tanks)
-                        {
-                            @tank.Cauldron
-
-                            <br />
-                        }
-                    }
-                </td>
+                <td>@raport.Containers.Type</td>
+            
                 <td>
                     <a asp-action="Edit" asp-route-id="@raport.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@raport.Id">Details</a> |

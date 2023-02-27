@@ -1,7 +1,7 @@
 ﻿
 
 @using PackingRaport.Domain.Models
-@model PackingRaport.Domain.Models.Raport;
+@model PackingRaport.Domain.ViewModels.RaportViewModel;
 
 @{
     ViewData["Title"] = "Create";
@@ -34,11 +34,12 @@
                 <input asp-for="EndProductionTime" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Products" class="control-label"></label>
-                <select asp-for="Products" asp-items="Html.GetEnumSelectList<TypeProduct>()" class="form-control">
-                    <option selected="selected" value="">Please select</option>
-                </select>
-                <span asp-validation-for="Products" class="text-danger"></span>
+                <label asp-for="Product.ProductName" class="control-label"></label>
+                <select asp-for="Product.ProductName" asp-items="ViewBag.ProductList"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Containers.Type" class="control-label"></label>
+                <select asp-for="Containers.Type" asp-items="ViewBag.ContainerList"></select>
             </div>
            @* <div class="form-group">
                 <label>Container</label>

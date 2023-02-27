@@ -9,7 +9,7 @@ namespace PackingRaport.Domain.InterfaceRepository
 {
     public interface IRaportRepositories
     {
-        Task<IEnumerable<Raport>> GetAllRaports();
+        IEnumerable<Raport> GetAllRaports();
         Task<Raport> GetById(int id);
         void AddRaport(Raport raport);
     }

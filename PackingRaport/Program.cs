@@ -1,11 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using PackingRaport.Persistance.Context;
-using Microsoft.AspNetCore.Identity;
 using PackingRaport.Domain.InterfaceRepository;
 using PackingRaport.Domain.Models;
 using PackingRaport.Infrastructure.InterfaceRepository;
 using PackingRaport.Infrastructure.Repositories;
-using PackingRaport.Persistance.Context;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,9 +18,13 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
     .AddEntityFrameworkStores<RaportDbContext>();
 
 builder.Services.AddTransient<IRaportRepositories, RaportRepository>()
-                .AddTransient<IUserRepository, UserRepository>()
-                .AddTransient<IProductRepository, ProductRepository>();
-                
+    .AddTransient<IUserRepository, UserRepository>()
+    .AddTransient<IProductRepository, ProductRepository>();
+
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddControllersWithViews();
+
+
 
 var app = builder.Build();
 
