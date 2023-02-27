@@ -9,6 +9,7 @@ using AutoMapper;
 using PackingRaport.Domain.ViewModels;
 
 using PackingRaport.Persistance.Context;
+using PackingRaport.Services.Interfaces;
 
 namespace PackingRaport.Controllers
 {
@@ -16,17 +17,13 @@ namespace PackingRaport.Controllers
     {
         private readonly IRaportRepositories _raportRepositories;
         private readonly IUserRepository _userRepository;
-        private readonly IProductRepository _productRepository;
-        private readonly IMapper _mapper;
-        private readonly RaportDbContext _dbContext;
-        public RaportController(IRaportRepositories raportRepositories, IUserRepository userRepository, IProductRepository productRepository,
-            IMapper mapper, RaportDbContext dbContext)
+        private readonly IRaportServices _raportServices;
+        public RaportController(IRaportRepositories raportRepositories, IUserRepository userRepository,
+            IRaportServices raportServices)
         {
             _raportRepositories = raportRepositories;
             _userRepository = userRepository;
-            _productRepository = productRepository;
-            _mapper = mapper;
-            _dbContext = dbContext;
+            _raportServices = raportServices;
         }
 
         public IActionResult Index()
@@ -80,24 +77,7 @@ namespace PackingRaport.Controllers
                 return NotFound();
             }
 
-            var product = new Product
-            {
-                ProductName = raport.Product.ProductName
-            };
-
-            Raport newRaport = new Raport
-            {
-                StartProductionTime = raport.StartProductionTime,
-                EndProductionTime = raport.EndProductionTime,
-                UserId = user.Id,
-                Product = product,
-                Containers = new Container
-                {
-                    Type = raport.Containers.Type
-                }
-            };
-
-            _raportRepositories.AddRaport(newRaport);
+            _raportRepositories.AddRaport(_raportServices.CreateRaport(raport,user));
 
             return RedirectToAction("Index");
 
