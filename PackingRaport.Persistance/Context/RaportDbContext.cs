@@ -13,11 +13,12 @@ namespace PackingRaport.Persistance.Context
 {
     public class RaportDbContext: IdentityDbContext<User>
     {
-        public DbSet<User> Users { get; set; }
         public DbSet<Raport> Raports { get; set; }
-        public DbSet<Container> Containers { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Tank> Tanks { get; set; }
+        public DbSet<Container> Containers { get; set; }
+        public DbSet<User> Users { get; set; }
+        
+
 
         public RaportDbContext(DbContextOptions<RaportDbContext> options):base(options)
         {
@@ -35,41 +36,7 @@ namespace PackingRaport.Persistance.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-            {
-                builder.Entity<Raport>()
-                    .HasOne<User>(r => r.User)
-                    .WithMany(r => r.Raports)
-                    .HasForeignKey(u => u.UserId);
-            }
-
-            {
-                builder.Entity<Product>()
-                    .HasOne<Raport>(r => r.Raports)
-                    .WithMany(r => r.Products)
-                    .HasForeignKey(u => u.RaportId);
-
-                builder.Entity<Container>()
-                    .HasOne<Raport>(r => r.Raports)
-                    .WithMany(r => r.Containers)
-                    .HasForeignKey(u => u.RaportId);
-            }
-
-            {
-                builder.Entity<Tank>()
-                    .HasOne<Container>(r => r.Containers)
-                    .WithMany(r => r.Tanks)
-                    .HasForeignKey(u => u.ContainerId);
-            }
-
-            {
-                builder.Entity<Raport>()
-                    .Property(t => t.StartProductionTime)
-                    .IsRequired();
-                builder.Entity<Raport>()
-                    .Property(e => e.EndProductionTime)
-                    .IsRequired();
-            }
+            
         }
 
         public class AppUserEntityConfiguration : IEntityTypeConfiguration<User>

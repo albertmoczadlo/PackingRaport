@@ -5,7 +5,10 @@ using PackingRaport.Domain.InterfaceRepository;
 using PackingRaport.Domain.Models;
 using PackingRaport.Infrastructure.InterfaceRepository;
 using System.Security.Claims;
+using AutoMapper;
 using PackingRaport.Domain.ViewModels;
+
+using PackingRaport.Persistance.Context;
 
 namespace PackingRaport.Controllers
 {
@@ -14,23 +17,29 @@ namespace PackingRaport.Controllers
         private readonly IRaportRepositories _raportRepositories;
         private readonly IUserRepository _userRepository;
         private readonly IProductRepository _productRepository;
-
-        public RaportController(IRaportRepositories raportRepositories, IUserRepository userRepository, IProductRepository productRepository)
+        private readonly IMapper _mapper;
+        private readonly RaportDbContext _dbContext;
+        public RaportController(IRaportRepositories raportRepositories, IUserRepository userRepository, IProductRepository productRepository,
+            IMapper mapper, RaportDbContext dbContext)
         {
-                _raportRepositories = raportRepositories;
-                _userRepository = userRepository;
-                _productRepository = productRepository;
+            _raportRepositories = raportRepositories;
+            _userRepository = userRepository;
+            _productRepository = productRepository;
+            _mapper = mapper;
+            _dbContext = dbContext;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var list = await _raportRepositories.GetAllRaports();
+            var list = _raportRepositories.GetAllRaports();
+
+
 
             return View(list);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -39,40 +48,79 @@ namespace PackingRaport.Controllers
             List<SelectListItem> userListName = new List<SelectListItem>();
 
             User user = _userRepository.GetUserById(id);
-          
-            userListName.Add(new SelectListItem(user.Name + " " + user.Surname, user.Id ));
+
+            userListName.Add(new SelectListItem(user.Name + " " + user.Surname, user.Id));
 
             ViewBag.UserListName = userListName;
+
+            ViewBag.ProductList = Enum.GetValues(typeof(TypeProduct)).Cast<TypeProduct>().Select(p => new SelectListItem
+            {
+                Text = p.ToString(),
+                Value = p.ToString()
+            }).ToList();
+
+            ViewBag.ContainerList = Enum.GetValues(typeof(TypeContainer)).Cast<TypeContainer>().Select(c => new SelectListItem
+            {
+                Text = c.ToString(),
+                Value = ((int)c).ToString()
+            }).ToList();
 
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateConfirmed(RaportViewModel raport, int productIndex)
+        public IActionResult CreateConfirmed(RaportViewModel raport)
         {
-            string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _userRepository.GetUserById(userId);
 
-            var user = _userRepository.GetUserById(id);
-
-            //raport.User = user;
-
-            Raport tRaport = new Raport();
-
-            tRaport.User = user;
-
-            foreach (var product in raport.Products)
+            if (user == null)
             {
-                tRaport.Products.Add(_productRepository.GetById(product));
+                return NotFound();
             }
 
-            tRaport.EndProductionTime = raport.EndProductionTime;
-            
-            
-            _raportRepositories.AddRaport(tRaport);
+            var product = new Product
+            {
+                ProductName = raport.Product.ProductName
+            };
+
+            Raport newRaport = new Raport
+            {
+                StartProductionTime = raport.StartProductionTime,
+                EndProductionTime = raport.EndProductionTime,
+                UserId = user.Id,
+                Product = product,
+                Containers = new Container
+                {
+                    Type = raport.Containers.Type
+                }
+            };
+
+            _raportRepositories.AddRaport(newRaport);
 
             return RedirectToAction("Index");
+
         }
+
+        //public async Task<IActionResult> CreateConfirmed(RaportViewModel raport, int productIndex)
+        //{
+        //    string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        //    var user = _userRepository.GetUserById(id);
+
+        //    ////maper
+
+        //    //foreach (var product in raport.Products)
+        //    //{
+        //    //    tRaport.Products.Add(_productRepository.GetById(product));
+        //    //}
+
+
+        //    _raportRepositories.AddRaport(tRaport);
+
+        //    return RedirectToAction("Index");
+        //}
 
 
 

@@ -12,9 +12,10 @@ namespace PackingRaport.Domain.Models
         public DateTime StartProductionTime { get; set; }
         public DateTime? EndProductionTime { get; set; }
         public string UserId { get; set; }
+       
 
         public User User { get; set; }
-        public ICollection<Product> Products { get; set; }
-        public ICollection<Container> Containers { get; set; }
+        public Product Product { get; set; }
+        public Container Containers { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PackingRaport.Persistance.Context;
 
@@ -11,9 +12,10 @@ using PackingRaport.Persistance.Context;
 namespace PackingRaport.Persistance.Migrations
 {
     [DbContext(typeof(RaportDbContext))]
-    partial class RaportDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230217102436_AddProduct")]
+    partial class AddProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,16 +169,15 @@ namespace PackingRaport.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("RaportId")
+                    b.Property<int>("NumberContainer")
                         .HasColumnType("int");
 
-                    b.Property<int>("Type")
+                    b.Property<int>("RaportId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RaportId")
-                        .IsUnique();
+                    b.HasIndex("RaportId");
 
                     b.ToTable("Containers");
                 });
@@ -212,12 +213,14 @@ namespace PackingRaport.Persistance.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime?>("EndProductionTime")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("StartProductionTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -225,6 +228,32 @@ namespace PackingRaport.Persistance.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Raports");
+                });
+
+            modelBuilder.Entity("PackingRaport.Domain.Models.Tank", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Bath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cauldron")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ContainerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContainerId");
+
+                    b.ToTable("Tanks");
                 });
 
             modelBuilder.Entity("PackingRaport.Domain.Models.User", b =>
@@ -253,6 +282,7 @@ namespace PackingRaport.Persistance.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
@@ -276,6 +306,7 @@ namespace PackingRaport.Persistance.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Surname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -352,8 +383,8 @@ namespace PackingRaport.Persistance.Migrations
             modelBuilder.Entity("PackingRaport.Domain.Models.Container", b =>
                 {
                     b.HasOne("PackingRaport.Domain.Models.Raport", "Raports")
-                        .WithOne("Containers")
-                        .HasForeignKey("PackingRaport.Domain.Models.Container", "RaportId")
+                        .WithMany("Containers")
+                        .HasForeignKey("RaportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -375,16 +406,35 @@ namespace PackingRaport.Persistance.Migrations
                 {
                     b.HasOne("PackingRaport.Domain.Models.User", "User")
                         .WithMany("Raports")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PackingRaport.Domain.Models.Tank", b =>
+                {
+                    b.HasOne("PackingRaport.Domain.Models.Container", "Containers")
+                        .WithMany("Tanks")
+                        .HasForeignKey("ContainerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Containers");
+                });
+
+            modelBuilder.Entity("PackingRaport.Domain.Models.Container", b =>
+                {
+                    b.Navigation("Tanks");
                 });
 
             modelBuilder.Entity("PackingRaport.Domain.Models.Raport", b =>
                 {
                     b.Navigation("Containers");
 
-                    b.Navigation("Product");
+                    b.Navigation("Product")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PackingRaport.Domain.Models.User", b =>
