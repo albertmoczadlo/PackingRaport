@@ -11,6 +11,6 @@ namespace PackingRaport.Domain.Models
         Produkt1 = 1,
         Produkt2 = 2,       
         Produkt3 = 3,
-        Produkt4= 4
+        Produkt4 = 4
     }
 }
