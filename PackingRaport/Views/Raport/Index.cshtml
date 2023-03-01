@@ -1,4 +1,9 @@
-﻿@model IEnumerable<PackingRaport.Domain.Models.Raport>
+﻿
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<PackingRaport.Domain.Models.Raport>
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using PackingRaport.Domain.Models
+
 
 @{
     ViewData["Title"] = "Index";
@@ -12,17 +17,51 @@
     <a asp-action="Create">Dodaj nowy produkcję</a>
 </p>
 
+@*@using (Html.BeginForm())
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+*@
+@*<form method="get">
+    <p>
+        Find by date: <input type="date" name="searchDate" value="@Model" />
+        <input type="submit" value="Filter" />
+        Find by name: <input type="searchString" name="searchString" value="" />
+        <input type="submit" value="Filter" />
+    </p>
+   
+</form>*@
+
+<form method="get">
+    <p>
+        Find by: <input type="date" name="searchDate" />
+        
+        <select name="searchType">
+            <option value="">--Wybierz produkt--</option>
+            @foreach (var item in Enum.GetValues(typeof(TypeProduct)))
+            {
+                <option value="@item">@item</option>
+            }
+        </select>
+        
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 <table class="table  table-bordered">
     <thead class="thead-light">
         <tr>
             @*<th>Id</th>*@
-            <th scope ="col">Imie</th>
+            <th scope="col">Imie</th>
             <th scope="col">Nazwisko</th>
             <th scope="col">Produkt</th>
             <th scope="col">Start Produkcji</th>
             <th scope="col">Koniec Produkcji</th>
-            <th scope="col">Zbiornika</th>
-            
+            <th scope="col">Zbiornik</th>
+
         </tr>
     </thead>
     <tbody>
@@ -33,14 +72,14 @@
                 <td>@raport.User.Name</td>
                 <td>@raport.User.Surname</td>
                 <td>@raport.Product.ProductName</td>
-                <td>@raport.StartProductionTime</td>
+                <td>@raport.StartProductionTime.ToString("dd.MM.yyyy")</td>
                 <td>@raport.EndProductionTime</td>
                 <td>@raport.Containers.Type</td>
-            
+
                 <td>
-                    <a asp-action="Edit" asp-route-id="@raport.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@raport.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@raport.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@raport.Id">Popraw</a> |
+                    <a asp-action="Details" asp-route-id="@raport.Id">Szczegóły</a> |
+                    <a asp-action="Delete" asp-route-id="@raport.Id">Usuń</a>
                 </td>
             </tr>
         }

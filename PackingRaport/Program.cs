@@ -4,6 +4,8 @@ using PackingRaport.Domain.InterfaceRepository;
 using PackingRaport.Domain.Models;
 using PackingRaport.Infrastructure.InterfaceRepository;
 using PackingRaport.Infrastructure.Repositories;
+using PackingRaport.Services.Interfaces;
+using PackingRaport.Services.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,12 +21,12 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
 
 builder.Services.AddTransient<IRaportRepositories, RaportRepository>()
     .AddTransient<IUserRepository, UserRepository>()
-    .AddTransient<IProductRepository, ProductRepository>();
+    .AddTransient<IProductRepository, ProductRepository>()
+    .AddTransient<IRaportServices, RaportServices>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllersWithViews();
-
-
+//builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 var app = builder.Build();
 

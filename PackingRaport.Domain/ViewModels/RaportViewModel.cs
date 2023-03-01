@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PackingRaport.Domain.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime;
@@ -26,6 +27,10 @@ namespace PackingRaport.Domain.ViewModels
         //            .ForMember(x => x.EndProductionTime, d => d.MapFrom(r => r.EndProductionTime));
 
         //    }
+        //}
+        //public IEnumerator GetEnumerator()
+        //{
+        //    throw new NotImplementedException();
         //}
     }
 }

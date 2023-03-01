@@ -7,9 +7,11 @@ using PackingRaport.Infrastructure.InterfaceRepository;
 using System.Security.Claims;
 using AutoMapper;
 using PackingRaport.Domain.ViewModels;
-
+using PackingRaport.Helpers;
 using PackingRaport.Persistance.Context;
 using PackingRaport.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System.Drawing.Printing;
 
 namespace PackingRaport.Controllers
 {
@@ -18,22 +20,77 @@ namespace PackingRaport.Controllers
         private readonly IRaportRepositories _raportRepositories;
         private readonly IUserRepository _userRepository;
         private readonly IRaportServices _raportServices;
+        private readonly RaportDbContext _dbContext;
+
+        PackingRaportHelpers _helpers = new PackingRaportHelpers();
         public RaportController(IRaportRepositories raportRepositories, IUserRepository userRepository,
-            IRaportServices raportServices)
+            IRaportServices raportServices, RaportDbContext dbContext)
         {
             _raportRepositories = raportRepositories;
             _userRepository = userRepository;
             _raportServices = raportServices;
+            _dbContext = dbContext;
         }
 
-        public IActionResult Index()
+        //public IActionResult Index(TypeProduct? typeProduct)
+        //{
+        //    var list = _raportRepositories.GetAllRaports();
+
+        //    if (typeProduct!=null)
+        //    {
+        //            var results = list.Where(x => x.Product.ProductName == typeProduct).ToList();
+
+        //            ViewBag.ProductList = new SelectList(Enum.GetValues(typeof(TypeProduct)));
+
+        //            return View(results);
+        //    }
+
+        //    ViewBag.ProductList = new SelectList(Enum.GetValues(typeof(TypeProduct)));
+
+        //    return View(list);
+        //}
+
+        public ViewResult Index(string sortOrder, string searchString, DateTime? searchDate, TypeProduct? searchType)
         {
-            var list = _raportRepositories.GetAllRaports();
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            var raports = _raportRepositories.GetAllRaports();
 
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                raports = raports.Where(s => s.User.Name.Contains(searchString)
+                                             || s.User.Surname.Contains(searchString));
+            }
 
+            if (searchDate.HasValue)
+            {
+                raports = raports.Where(s => s.StartProductionTime.Date == searchDate.Value.Date);
+            }
 
-            return View(list);
+            if (searchType.HasValue)
+            {
+                raports = raports.Where(s => s.Product.ProductName == searchType.Value);
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    raports = raports.OrderByDescending(s => s.StartProductionTime);
+                    break;
+                case "Date":
+                    raports = raports.OrderBy(s => s.Containers.Type);
+                    break;
+                case "date_desc":
+                    raports = raports.OrderByDescending(s => s.Product.ProductName);
+                    break;
+                default:
+                    raports = raports.OrderBy(s => s.User.Surname);
+                    break;
+            }
+
+            return View(raports.ToList());
         }
+
 
         [HttpGet]
         public IActionResult Create()
@@ -77,7 +134,7 @@ namespace PackingRaport.Controllers
                 return NotFound();
             }
 
-            _raportRepositories.AddRaport(_raportServices.CreateRaport(raport,user));
+            _raportRepositories.AddRaport(_raportServices.CreateRaport(raport, user));
 
             return RedirectToAction("Index");
 
