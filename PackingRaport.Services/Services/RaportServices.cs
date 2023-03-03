@@ -52,7 +52,7 @@ namespace PackingRaport.Services.Services
             var user = _userRepository.GetAllUsers()
                 .Where(x => x.Id == result.UserId).Select(x => $"{x.Name} {x.Surname}").FirstOrDefault();
 
-            string product = _productRepository.GetProducts()
+            var product = _productRepository.GetProducts()
                 .Where(x => x.RaportId == result.Id).Select(x => $"{x.ProductName.ToString()}").FirstOrDefault();
 
             var containers = _raportRepositories.GetContainers()
