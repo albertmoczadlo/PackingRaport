@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model PackingRaport.Domain.Models.Raport
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using PackingRaport.Domain.ViewModels
+
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h3>Szczegóły</h3>
+
+<div>
+    
+    <hr />
+    <dl class="row">
+        <dt>
+            <label asp-for="Id"></label>
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Id
+        </dd>
+        <dt>
+            <label>Operator</label>
+        </dt>
+        <dd>
+            @ViewBag.UserName
+        </dd>
+        <dt>
+          <label>Start</label>
+        </dt>
+        <dd class="col-sm-10">
+            @Model.StartProductionTime
+        </dd>
+        <dt>
+            <label>Koniec</label>
+        </dt>
+        <dd class="col-sm-10">
+            @Model.EndProductionTime
+        </dd>
+        <dt>
+            <label>Produkt:</label>
+        </dt>
+        <dd>
+            @ViewBag.ProductName
+        </dd>
+        <dt>
+            <label> Zbiornik</label>
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.Container
+        </dd>
+    </dl>
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+

@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<RaportDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("PackingRaportConection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("PackingRaportConection"))); 
 
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<RaportDbContext>();
@@ -25,7 +25,9 @@ builder.Services.AddTransient<IRaportRepositories, RaportRepository>()
     .AddTransient<IRaportServices, RaportServices>();
 
 builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddControllersWithViews();
+builder.Services
+    .AddControllersWithViews()
+    .AddRazorRuntimeCompilation();
 //builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 var app = builder.Build();

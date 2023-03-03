@@ -34,9 +34,9 @@ namespace PackingRaport.Infrastructure.InterfaceRepository
             return raports;
         }
 
-        public async Task<Raport> GetById(int id)
+        public Raport GetById(int id)
         {
-            var raport =await _context.Raports.FindAsync(id);
+            var raport = _context.Raports.Find(id);
 
             if (raport == null)
             {
@@ -50,6 +50,13 @@ namespace PackingRaport.Infrastructure.InterfaceRepository
         {
             _context.Raports.Add(raport);
             _context.SaveChanges();
+        }
+
+        public IEnumerable<Container> GetContainers()
+        {
+            var container = _context.Containers;
+
+            return container;
         }
     }
 }
