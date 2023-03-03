@@ -147,12 +147,9 @@ namespace PackingRaport.Controllers
         {
             var result = _raportRepositories.GetById(id);
 
-            var UserProductContainer = _raportServices.GetUserProductContainer(id);
-
-            ViewBag.UserName = UserProductContainer.Item1;
-            ViewBag.ProductName = UserProductContainer.Item2;
-            ViewBag.Container = UserProductContainer.Item3;
-             
+            ViewBag.UserName = _raportServices.GetUser(id);
+            ViewBag.ProductName = _raportServices.GetProduct(id);
+            ViewBag.Container = _raportServices.GetContainers(id);
 
             return View(result);
         }

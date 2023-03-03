@@ -45,21 +45,51 @@ namespace PackingRaport.Services.Services
             return newRaport;
         }
 
-        public Tuple<string, string,string> GetUserProductContainer(int id)
+        //public Tuple<string, string,string> GetUserProductContainer(int id)
+        //{
+        //    var result = _raportRepositories.GetById(id);
+
+        //    var user = _userRepository.GetAllUsers()
+        //        .Where(x => x.Id == result.UserId).Select(x => $"{x.Name} {x.Surname}").FirstOrDefault();
+
+        //    var product = _productRepository.GetProducts()
+        //        .Where(x => x.RaportId == result.Id).Select(x => $"{x.ProductName.ToString()}").FirstOrDefault();
+
+        //    var containers = _raportRepositories.GetContainers()
+        //        .Where(x=>x.RaportId==id)
+        //        .Select(x=>$"{x.Type.ToString()}").FirstOrDefault();
+
+        //    return Tuple.Create(user, product,containers);
+        //}
+
+        public string GetUser(int id)
         {
             var result = _raportRepositories.GetById(id);
-
             var user = _userRepository.GetAllUsers()
-                .Where(x => x.Id == result.UserId).Select(x => $"{x.Name} {x.Surname}").FirstOrDefault();
-
-            var product = _productRepository.GetProducts()
-                .Where(x => x.RaportId == result.Id).Select(x => $"{x.ProductName.ToString()}").FirstOrDefault();
-
-            var containers = _raportRepositories.GetContainers()
-                .Where(x=>x.RaportId==id)
-                .Select(x=>$"{x.Type.ToString()}").FirstOrDefault();
-
-            return Tuple.Create(user, product,containers);
+                .Where(x => x.Id == result.UserId)
+                .Select(x => $"{x.Name} {x.Surname}")
+                .FirstOrDefault();
+            return user;
         }
+
+        public string GetProduct(int id)
+        {
+            var result = _raportRepositories.GetById(id);
+            var product = _productRepository.GetProducts()
+                .Where(x => x.RaportId == result.Id)
+                .Select(x => $"{x.ProductName.ToString()}")
+                .FirstOrDefault();
+            return product;
+        }
+
+        public string GetContainers(int id)
+        {
+            var containers = _raportRepositories.GetContainers()
+                .Where(x => x.RaportId == id)
+                .Select(x => $"{x.Type.ToString()}")
+                .FirstOrDefault();
+            return containers;
+        }
+
     }
 }
