@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PackingRaport.Domain.InterfaceRepository;
 using PackingRaport.Domain.Models;
 using PackingRaport.Services.Interfaces;
 
@@ -10,6 +11,18 @@ namespace PackingRaport.Services.Services
 {
     public class RaportServices:IRaportServices
     {
+        private readonly IRaportRepositories _raportRepositories;
+        private readonly IUserRepository _userRepository;
+        private readonly IProductRepository _productRepository;
+
+        public RaportServices(IRaportRepositories raportRepositories, IUserRepository userRepository,
+            IProductRepository productRepository)
+        {
+                _raportRepositories= raportRepositories;
+                _userRepository= userRepository;
+                _productRepository= productRepository;
+        }
+
         public Raport CreateRaport(Raport raport, User user)
         {
             var product = new Product
@@ -30,6 +43,23 @@ namespace PackingRaport.Services.Services
             };
 
             return newRaport;
+        }
+
+        public Tuple<string, string,string> GetUserProductContainer(int id)
+        {
+            var result = _raportRepositories.GetById(id);
+
+            var user = _userRepository.GetAllUsers()
+                .Where(x => x.Id == result.UserId).Select(x => $"{x.Name} {x.Surname}").FirstOrDefault();
+
+            string product = _productRepository.GetProducts()
+                .Where(x => x.RaportId == result.Id).Select(x => $"{x.ProductName.ToString()}").FirstOrDefault();
+
+            var containers = _raportRepositories.GetContainers()
+                .Where(x=>x.RaportId==id)
+                .Select(x=>$"{x.Type.ToString()}").FirstOrDefault();
+
+            return Tuple.Create(user, product,containers);
         }
     }
 }

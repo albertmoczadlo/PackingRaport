@@ -11,31 +11,44 @@
 }
 
 <h1>Raport</h1>
-<p>Data: @DateTime.Now.ToString("yyyy-MM-dd")</p>
+
+@*<p>Data: @DateTime.Now.ToString("yyyy-MM-dd")</p>
 
 <p>
     <a asp-action="Create">Dodaj nowy produkcję</a>
-</p>
+</p>*@
 
-@*@using (Html.BeginForm())
-{
-    <p>
-        Find by name: @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
+@*<div class="row">
+    <div class="col-2">
+        <p>Data: @DateTime.Now.ToString("yyyy-MM-dd")</p>
+    </div>
+    <div class="col-2">
+        <a asp-action="Create" class="btn btn-light">Dodaj nowy produkcję</a> 
+    </div>
+</div>*@
+<p class="d-inline-block">Data: @DateTime.Now.ToString("yyyy-MM-dd")</p>
+<div class="d-flex justify-content-between">
+    <form method="get">
+        <p>
+            Find by: <input type="date" name="searchDate" />
+        
+            <select name="searchType">
+                <option value="">--Wybierz produkt--</option>
+                @foreach (var item in Enum.GetValues(typeof(TypeProduct)))
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+        
+            <input type="submit" value="Filter" />
+        </p>
+    </form>
+    <p class="d-inline-block p-2">
+        <a asp-action="Create" class="btn btn-secondary">Dodaj nową produkcję</a>
     </p>
-}
-*@
+</div>
+
 @*<form method="get">
-    <p>
-        Find by date: <input type="date" name="searchDate" value="@Model" />
-        <input type="submit" value="Filter" />
-        Find by name: <input type="searchString" name="searchString" value="" />
-        <input type="submit" value="Filter" />
-    </p>
-   
-</form>*@
-
-<form method="get">
     <p>
         Find by: <input type="date" name="searchDate" />
         
@@ -49,7 +62,7 @@
         
         <input type="submit" value="Filter" />
     </p>
-</form>
+</form>*@
 
 <table class="table  table-bordered">
     <thead class="thead-light">
@@ -76,10 +89,17 @@
                 <td>@raport.EndProductionTime</td>
                 <td>@raport.Containers.Type</td>
 
-                <td>
-                    <a asp-action="Edit" asp-route-id="@raport.Id">Popraw</a> |
+                <td class="d-flex justify-content-center ">
+
+                    <input type="button" value="Szczegóły" class="btn btn-outline-secondary btn-sm align-text-bottom" onclick="location.href='@Url.Action("Details", "Raport",new { Id = raport.Id } )'" />
+
+
+                    @* <input class="mx-2" type="submit" value="Popraw" asp-action="Edit" asp-controller="Raport" />
+                <input class="mx-2" type="submit" value="Szczegóły" asp-action="Details"  asp-route-id="@raport.Id" asp-controller="Raport" />
+                    <input class="mx-2" type="submit" value="Usuń" asp-action="Delete" asp-controller="Raport" />*@
+                    @*<a asp-action="Edit" asp-route-id="@raport.Id">Popraw</a> |
                     <a asp-action="Details" asp-route-id="@raport.Id">Szczegóły</a> |
-                    <a asp-action="Delete" asp-route-id="@raport.Id">Usuń</a>
+                    <a asp-action="Delete" asp-route-id="@raport.Id">Usuń</a>*@
                 </td>
             </tr>
         }

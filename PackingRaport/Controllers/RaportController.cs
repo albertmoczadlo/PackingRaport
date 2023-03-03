@@ -50,10 +50,12 @@ namespace PackingRaport.Controllers
         //    return View(list);
         //}
 
-        public ViewResult Index(string sortOrder, string searchString, DateTime? searchDate, TypeProduct? searchType)
+        [HttpGet]
+        public ViewResult Index(string? sortOrder, string searchString, DateTime? searchDate, TypeProduct? searchType)
         {
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
             var raports = _raportRepositories.GetAllRaports();
 
             if (!String.IsNullOrEmpty(searchString))
@@ -138,6 +140,21 @@ namespace PackingRaport.Controllers
 
             return RedirectToAction("Index");
 
+        }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            var result = _raportRepositories.GetById(id);
+
+            var UserProductContainer = _raportServices.GetUserProductContainer(id);
+
+            ViewBag.UserName = UserProductContainer.Item1;
+            ViewBag.ProductName = UserProductContainer.Item2;
+            ViewBag.Container = UserProductContainer.Item3;
+             
+
+            return View(result);
         }
 
         //public async Task<IActionResult> CreateConfirmed(RaportViewModel raport, int productIndex)
