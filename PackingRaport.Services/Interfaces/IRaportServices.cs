@@ -10,6 +10,9 @@ namespace PackingRaport.Services.Interfaces
     public interface IRaportServices
     {
         Raport CreateRaport(Raport raport, User user);
-        public Tuple<string, string, string> GetUserProductContainer(int id);
+        //public Tuple<string, string, string> GetUserProductContainer(int id);
+        string GetUser(int id);
+        string GetProduct(int id);
+        string GetContainers(int id);
     }
 }
