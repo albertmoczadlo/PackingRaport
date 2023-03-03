@@ -20,7 +20,6 @@ namespace PackingRaport.Controllers
         private readonly IRaportRepositories _raportRepositories;
         private readonly IUserRepository _userRepository;
         private readonly IRaportServices _raportServices;
-        private readonly RaportDbContext _dbContext;
 
         PackingRaportHelpers _helpers = new PackingRaportHelpers();
         public RaportController(IRaportRepositories raportRepositories, IUserRepository userRepository,
@@ -29,26 +28,7 @@ namespace PackingRaport.Controllers
             _raportRepositories = raportRepositories;
             _userRepository = userRepository;
             _raportServices = raportServices;
-            _dbContext = dbContext;
         }
-
-        //public IActionResult Index(TypeProduct? typeProduct)
-        //{
-        //    var list = _raportRepositories.GetAllRaports();
-
-        //    if (typeProduct!=null)
-        //    {
-        //            var results = list.Where(x => x.Product.ProductName == typeProduct).ToList();
-
-        //            ViewBag.ProductList = new SelectList(Enum.GetValues(typeof(TypeProduct)));
-
-        //            return View(results);
-        //    }
-
-        //    ViewBag.ProductList = new SelectList(Enum.GetValues(typeof(TypeProduct)));
-
-        //    return View(list);
-        //}
 
         [HttpGet]
         public ViewResult Index(string? sortOrder, string searchString, DateTime? searchDate, TypeProduct? searchType)
@@ -92,7 +72,6 @@ namespace PackingRaport.Controllers
 
             return View(raports.ToList());
         }
-
 
         [HttpGet]
         public IActionResult Create()
@@ -153,27 +132,6 @@ namespace PackingRaport.Controllers
 
             return View(result);
         }
-
-        //public async Task<IActionResult> CreateConfirmed(RaportViewModel raport, int productIndex)
-        //{
-        //    string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        //    var user = _userRepository.GetUserById(id);
-
-        //    ////maper
-
-        //    //foreach (var product in raport.Products)
-        //    //{
-        //    //    tRaport.Products.Add(_productRepository.GetById(product));
-        //    //}
-
-
-        //    _raportRepositories.AddRaport(tRaport);
-
-        //    return RedirectToAction("Index");
-        //}
-
-
 
     }
 }
