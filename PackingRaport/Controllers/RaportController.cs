@@ -107,8 +107,14 @@ namespace PackingRaport.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateConfirmed(RaportViewModel raport)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = _userRepository.GetUserById(userId);
+
 
             if (user == null)
             {

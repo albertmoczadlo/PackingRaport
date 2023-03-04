@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PackingRaport.Persistance.Context;
 
@@ -11,9 +12,10 @@ using PackingRaport.Persistance.Context;
 namespace PackingRaport.Persistance.Migrations
 {
     [DbContext(typeof(RaportDbContext))]
-    partial class RaportDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230304123939_ChangeRequaireUserId")]
+    partial class ChangeRequaireUserId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
