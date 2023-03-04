@@ -41,6 +41,10 @@
                 <label asp-for="Containers.Type" class="control-label"></label><br/>
                 <select style="width: 100%" asp-for="Containers.Type" asp-items="ViewBag.ContainerList"></select>
             </div>
+            <div class="form-group">
+                <label asp-for="Quantity"></label>
+                <input asp-for="Quantity" class="form-control" />
+            </div>
            @* <div class="form-group">
                 <label>Container</label>
                 <select asp-for="ContainerId" class="form-control" asp-items="ViewBag.ContainerList">
