@@ -11,6 +11,7 @@ namespace PackingRaport.Domain.Models
     public class Raport
     {
         public int Id { get; set; }
+        public DayOfWeek Day { get; set; }
         [DisplayName("Start")]
         [Required]
         [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]

@@ -115,7 +115,6 @@ namespace PackingRaport.Controllers
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = _userRepository.GetUserById(userId);
 
-
             if (user == null)
             {
                 return NotFound();
