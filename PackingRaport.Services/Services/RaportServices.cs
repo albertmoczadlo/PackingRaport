@@ -32,6 +32,7 @@ namespace PackingRaport.Services.Services
 
             Raport newRaport = new Raport
             {
+                Day = raport.Day,
                 StartProductionTime = raport.StartProductionTime,
                 EndProductionTime = raport.EndProductionTime,
                 UserId = user.Id,

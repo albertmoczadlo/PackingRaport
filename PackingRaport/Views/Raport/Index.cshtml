@@ -10,7 +10,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Raport</h1>
+<h3>Raport</h3>
 
 @*<p>Data: @DateTime.Now.ToString("yyyy-MM-dd")</p>
 
@@ -27,6 +27,7 @@
     </div>
 </div>*@
 <p class="d-inline-block">Data: @DateTime.Now.ToString("yyyy-MM-dd")</p>
+
 <div class="d-flex justify-content-between">
     <form method="get">
         <p>
@@ -68,6 +69,7 @@
     <thead class="thead-light">
         <tr>
             @*<th>Id</th>*@
+            <th scope="col">Dzień tygodnia</th>
             <th scope="col">Imie</th>
             <th scope="col">Nazwisko</th>
             <th scope="col">Produkt</th>
@@ -83,6 +85,7 @@
         {
             <tr>
                 @*<td>@raport.Id</td>*@
+                <td>@raport.Day.ToString()</td>
                 <td>@raport.User.Name</td>
                 <td>@raport.User.Surname</td>
                 <td>@raport.Product.ProductName</td>
