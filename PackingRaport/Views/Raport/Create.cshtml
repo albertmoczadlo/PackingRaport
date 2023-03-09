@@ -5,83 +5,17 @@
     ViewData["Title"] = "Create";
 }
 
-@*<h3>Dodaj</h3>*@
-
 @*<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <form asp-action="CreateConfirmed">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label for="day">Dzień tygodnia:</label>
-                    <select id="day" name="day" class="form-control">
-                        <option value="1">Poniedziałek</option>
-                        <option value="2">Wtorek</option>
-                        <option value="3">Środa</option>
-                        <option value="4">Czwartek</option>
-                        <option value="5">Piątek</option>
-                        <option value="6">Sobota</option>
-                        <option value="0">Niedziela</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="user">Użytkownik:</label>
-                    <select id="user" name="user" class="form-control" asp-for="User.Name" asp-items="ViewBag.UserListName"></select>
-                </div>
-                <div class="form-group">
-                    <label for="start-time">Czas rozpoczęcia produkcji:</label>
-                    <input id="start-time" asp-for="StartProductionTime" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="end-time">Czas zakończenia produkcji:</label>
-                    <input id="end-time" asp-for="EndProductionTime" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label for="product">Produkt:</label>
-                    <select id="product" name="product" asp-for="Product.ProductName" asp-items="ViewBag.ProductList" class="form-control"></select>
-                </div>
-                <div class="form-group">
-                    <label for="container">Typ kontenera:</label>
-                    <select id="container" name="container" asp-for="Containers.Type" asp-items="ViewBag.ContainerList" class="form-control"></select>
-                </div>
-                <div class="form-group">
-                    <label for="quantity">Ilość:</label>
-                    <input id="quantity" asp-for="Quantity" class="form-control" />
-                </div>
-                <button type="submit" class="btn btn-primary">Dodaj</button>
-            </form>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="Comments">Uwagi:</label>
-                <textarea id="Comments" name="notes" class="form-control"></textarea>
-            </div>
-            <div class="text-center">
-                <a href="@Url.Action("Index", "Home")" class="btn btn-secondary mt-3">Anuluj</a>
-            </div>
-        </div>
-    </div>
-
 
 </div>*@
 
-<div class="container">
-</div>
-
 <h4 class="text-center">Raport</h4>
 <hr />
-<div class="row">
+<div class="row justify-content-center align-items-center">
     <div class="col-md-4 text-center">
         <form asp-action="CreateConfirmed">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @* <div class="form-group">
-            <label asp-for="Id" class="control-label"></label>
-            <input asp-for="Id" class="form-control" />
-            <span asp-validation-for="Id" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
-                @*<label asp-for="Day"></label>
-                <input asp-for="Day" class="form-control" />*@
                 <label for="day">Dzień tygodnia:</label>
                 <select id="day" name="day" class="form-control">
                     <option value="1">Poniedziałek</option>
@@ -119,22 +53,16 @@
                 <input asp-for="Quantity" class="form-control" />
             </div>
             <div class="form-group">
-                <input type="submit" value="Dodaj" class="btn btn-primary mt-3" />
+                <label asp-for="Comments"></label>
+                <textarea asp-for="Comments" class="form-control" style="height: 150px;"></textarea>
             </div>
-            <div>
-                <a asp-action="Index">Back to List</a>
+            <div class="form-group">
+                <input type="submit" value="Dodaj" class="btn btn-primary mt-3" />
+                <input type="button" value="Powrót do listy" class="btn btn-primary mt-3" onclick="location.href='@Url.Action("Index", "Raport" )'" />
             </div>
         </form>
     </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label asp-for="Comments"></label>
-            <input asp-for="Comments" class="form-control" />
-        </div>
-    </div>
-
 </div>
-
 
 
 @section Scripts {

@@ -11,66 +11,120 @@
 <h3>Szczegóły</h3>
 
 <div>
-    
     <hr />
     <dl class="row">
-        <dt>
-            <label asp-for="Id"></label>
+       @* <div class ="col-md-4">
+            <dt>
+                <label>Id</label>
+            </dt>
+            <dd>
+                @Model.Id
+            </dd>
+        </div>*@
+        <div class="col-md-2">
+            <dt>
+                <label>Operator</label>
+            </dt>
+            <dd>
+                @ViewBag.UserName
+            </dd>
+        </div>
+        <div class="col-md-2">
+            <dt>
+                <label>Start</label>
+            </dt>
+            <dd>
+                @Model.StartProductionTime
+            </dd>
+        </div>
+        <div class="col-md-2">
+            <dt>
+                <label>Koniec</label>
+            </dt>
+            <dd>
+                @Model.EndProductionTime
+            </dd>
+        </div>
+        <div class="col-md-2">
+            <dt>
+                <label>Produkt</label>
+            </dt>
+            <dd>
+                @ViewBag.ProductName
+            </dd>
+        </div>
+        <div class="col-md-2">
+            <dt>
+                <label>Zbiornik</label>
+            </dt>
+            <dd>
+                @ViewBag.Container
+            </dd>
+        </div>
+        <div class="col-md-2">
+            <dt>
+                <label>Ilość</label>
+            </dt>
+            <dd>
+                @Model.Quantity
+            </dd>
+        </div>
+        <div class="col-md-4">
+            <dt>
+                <label>Uwagi</label>
+            </dt>
+            <dd>
+                @Model.Comments
+            </dd>
+        </div>
+
+
+
+       @* <dt class="col-md-4">
+            <label>Operator:</label>
         </dt>
-        <dd class="col-sm-10">
-            @Model.Id
-        </dd>
-        <dt>
-            <label asp-for="Day"></label>
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Day
-        </dd>
-        <dt>
-            <label>Operator</label>
-        </dt>
-        <dd>
+        <dd class="col-md-4">
             @ViewBag.UserName
         </dd>
-        <dt>
-          <label>Start</label>
-        </dt>
-        <dd class="col-sm-10">
-            @Model.StartProductionTime
-        </dd>
-        <dt>
-            <label>Koniec</label>
-        </dt>
-        <dd class="col-sm-10">
-            @Model.EndProductionTime
-        </dd>
-        <dt>
+       <dt class="col-md-4">
             <label>Produkt:</label>
         </dt>
-        <dd>
+        <dd class="col-md-4">
             @ViewBag.ProductName
         </dd>
-        <dt>
-            <label> Zbiornik</label>
+        <dt class="col-md-4">
+            <label>Start:</label>
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-md-4">
+            @Model.StartProductionTime
+        </dd>
+        <dt class="col-md-4">
+            <label> Zbiornik:</label>
+        </dt>
+        <dd class="col-md-4">
             @ViewBag.Container
         </dd>
-        <dt>
-            <label>Ilość</label>
+        <dt class="col-md-4">
+            <label>Koniec:</label>
         </dt>
-        <dd class="col-sm-10">
-            @Model.Quantity
+        <dd class="col-md-4">
+            @Model.EndProductionTime
         </dd>
-        <dt>
-            <label>Uwagi</label>
+        <dt class="col-md-4">
+            <label>Uwagi:</label>
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-md-4">
             @Model.Comments
         </dd>
+        <dt class="col-md-4">
+            <label>Ilość:</label>
+        </dt>
+        <dd class="col-md-4">
+            @Model.Quantity
+        </dd>
+*@
     </dl>
 </div>
-
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
