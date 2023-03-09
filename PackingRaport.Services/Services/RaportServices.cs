@@ -41,7 +41,8 @@ namespace PackingRaport.Services.Services
                 {
                     Type = raport.Containers.Type
                 },
-                Quantity = raport.Quantity
+                Quantity = raport.Quantity,
+                Comments = raport.Comments
             };
 
             return newRaport;

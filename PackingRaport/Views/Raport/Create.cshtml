@@ -1,29 +1,22 @@
-﻿
-
-@using PackingRaport.Domain.Models
+﻿@using PackingRaport.Domain.Models
 @model PackingRaport.Domain.Models.Raport
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Dodaj</h1>
+@*<div class="container">
 
-<h4>Raport</h4>
+</div>*@
+
+<h4 class="text-center">Raport</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row justify-content-center align-items-center">
+    <div class="col-md-4 text-center">
         <form asp-action="CreateConfirmed">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @* <div class="form-group">
-            <label asp-for="Id" class="control-label"></label>
-            <input asp-for="Id" class="form-control" />
-            <span asp-validation-for="Id" class="text-danger"></span>
-        </div>*@
             <div class="form-group">
-                @*<label asp-for="Day"></label>
-                <input asp-for="Day" class="form-control" />*@
-                <label for="day">Day of week:</label>
+                <label for="day">Dzień tygodnia:</label>
                 <select id="day" name="day" class="form-control">
                     <option value="1">Poniedziałek</option>
                     <option value="2">Wtorek</option>
@@ -48,38 +41,32 @@
                 <input asp-for="EndProductionTime" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Product.ProductName" class="control-label"></label><br/>
+                <label asp-for="Product.ProductName" class="control-label"></label><br />
                 <select style="width: 100%" asp-for="Product.ProductName" asp-items="ViewBag.ProductList"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Containers.Type" class="control-label"></label><br/>
+                <label asp-for="Containers.Type" class="control-label"></label><br />
                 <select style="width: 100%" asp-for="Containers.Type" asp-items="ViewBag.ContainerList"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Quantity"></label>
                 <input asp-for="Quantity" class="form-control" />
             </div>
-           @* <div class="form-group">
-                <label>Container</label>
-                <select asp-for="ContainerId" class="form-control" asp-items="ViewBag.ContainerList">
-                </select>
-            </div>*@
-            @* <div class="form-group">
-            <label asp-for="UserId" class="control-label"></label>
-            <input asp-for="UserId" class="form-control" />
-            <span asp-validation-for="UserId" class="text-danger"></span>
-        </div>*@
+            <div class="form-group">
+                <label asp-for="Comments"></label>
+                <textarea asp-for="Comments" class="form-control" style="height: 150px;"></textarea>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Dodaj" class="btn btn-primary mt-3" />
+                <input type="button" value="Powrót do listy" class="btn btn-primary mt-3" onclick="location.href='@Url.Action("Index", "Raport" )'" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
-    @{Html.RenderPartial("_ValidationScriptsPartial");}
+    @{
+        Html.RenderPartial("_ValidationScriptsPartial");
+    }
 }

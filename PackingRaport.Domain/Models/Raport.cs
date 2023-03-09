@@ -11,6 +11,7 @@ namespace PackingRaport.Domain.Models
     public class Raport
     {
         public int Id { get; set; }
+        [DisplayName("Dzień tygodnia")]
         public DayOfWeek Day { get; set; }
         [DisplayName("Start")]
         [Required]
@@ -23,6 +24,8 @@ namespace PackingRaport.Domain.Models
         [DisplayName("Ilość")]
         [Range(0, 1000000, ErrorMessage = "Value must be between 0 and 1,000,000.")]
         public int Quantity { get; set; }
+        [DisplayName("Uwagi")]
+        public string Comments { get; set; }
        
 
         public User User { get; set; }
