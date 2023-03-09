@@ -1,5 +1,4 @@
-﻿
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model IEnumerable<PackingRaport.Domain.Models.Raport>
 @using Microsoft.AspNetCore.Mvc.Rendering
 @using PackingRaport.Domain.Models
@@ -23,7 +22,7 @@
         <p>Data: @DateTime.Now.ToString("yyyy-MM-dd")</p>
     </div>
     <div class="col-2">
-        <a asp-action="Create" class="btn btn-light">Dodaj nowy produkcję</a> 
+        <a asp-action="Create" class="btn btn-light">Dodaj nowy produkcję</a>
     </div>
 </div>*@
 <p class="d-inline-block">Data: @DateTime.Now.ToString("yyyy-MM-dd")</p>
@@ -32,7 +31,7 @@
     <form method="get">
         <p>
             Find by: <input type="date" name="searchDate" />
-        
+
             <select name="searchType">
                 <option value="">--Wybierz produkt--</option>
                 @foreach (var item in Enum.GetValues(typeof(TypeProduct)))
@@ -40,7 +39,7 @@
                     <option value="@item">@item</option>
                 }
             </select>
-        
+
             <input type="submit" value="Filter" />
         </p>
     </form>
@@ -48,22 +47,6 @@
         <a asp-action="Create" class="btn btn-secondary">Dodaj nową produkcję</a>
     </p>
 </div>
-
-@*<form method="get">
-    <p>
-        Find by: <input type="date" name="searchDate" />
-        
-        <select name="searchType">
-            <option value="">--Wybierz produkt--</option>
-            @foreach (var item in Enum.GetValues(typeof(TypeProduct)))
-            {
-                <option value="@item">@item</option>
-            }
-        </select>
-        
-        <input type="submit" value="Filter" />
-    </p>
-</form>*@
 
 <table class="table  table-bordered">
     <thead class="thead-light">
@@ -94,18 +77,25 @@
                 <td>@raport.Containers.Type</td>
                 <td>@raport.Quantity</td>
 
-                <td class="d-flex justify-content-center ">
+                <td class="d-flex justify-content-center">
+                    <input type="button" value="Szczegóły" class="btn btn-outline-secondary btn-sm align-text-bottom mx-1" onclick="location.href='@Url.Action("Details", "Raport",new { Id = raport.Id } )'" />
+                    <input type="button" value="Usuń" class="btn btn-outline-secondary btn-sm align-text-bottom mx-1" onclick="location.href='@Url.Action("Delete", "Raport",new { Id = raport.Id } )'" />
+                    <input type="button" value="Edytuj" class="btn btn-outline-secondary btn-sm align-text-bottom mx-1" onclick="location.href='@Url.Action("Edit", "Raport",new { Id = raport.Id } )'" />
+                </td>
+
+          @*      <td class="d-flex justify-content-center ">
 
                     <input type="button" value="Szczegóły" class="btn btn-outline-secondary btn-sm align-text-bottom" onclick="location.href='@Url.Action("Details", "Raport",new { Id = raport.Id } )'" />
+                    <input type="button" value="Usuń" class="btn btn-outline-secondary btn-sm align-text-bottom" onclick="location.href='@Url.Action("Delete", "Raport",new { Id = raport.Id } )'" />
 
 
-                    @* <input class="mx-2" type="submit" value="Popraw" asp-action="Edit" asp-controller="Raport" />
-                <input class="mx-2" type="submit" value="Szczegóły" asp-action="Details"  asp-route-id="@raport.Id" asp-controller="Raport" />
+                    <input class="mx-2" type="submit" value="Popraw" asp-action="Edit" asp-controller="Raport" />
+                    <input class="mx-2" type="submit" value="Szczegóły" asp-action="Details" asp-route-id="@raport.Id" asp-controller="Raport" />
                     <input class="mx-2" type="submit" value="Usuń" asp-action="Delete" asp-controller="Raport" />*@
                     @*<a asp-action="Edit" asp-route-id="@raport.Id">Popraw</a> |
-                    <a asp-action="Details" asp-route-id="@raport.Id">Szczegóły</a> |
-                    <a asp-action="Delete" asp-route-id="@raport.Id">Usuń</a>*@
-                </td>
+                <a asp-action="Details" asp-route-id="@raport.Id">Szczegóły</a> |
+                <a asp-action="Delete" asp-route-id="@raport.Id">Usuń</a>
+                </td>*@
             </tr>
         }
     </tbody>

@@ -16,7 +16,7 @@ namespace PackingRaport.Infrastructure.InterfaceRepository
     public class RaportRepository : IRaportRepositories
     {
         private readonly RaportDbContext _context;
-        
+
 
         public RaportRepository(RaportDbContext context)
         {
@@ -57,6 +57,19 @@ namespace PackingRaport.Infrastructure.InterfaceRepository
             var container = _context.Containers;
 
             return container;
+        }
+
+        public void RemoveRaport(Raport raport)
+        {
+            _context.Remove(raport);
+
+            _context.SaveChanges();
+        }
+
+        public void Update(Raport raport)
+        {
+            _context.Update(raport);
+            _context.SaveChanges();
         }
     }
 }

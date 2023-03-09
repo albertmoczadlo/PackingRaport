@@ -1,0 +1,74 @@
+﻿@model PackingRaport.Domain.Models.Raport;
+
+
+@{
+    ViewData["Title"] = "Edit";
+}}
+
+<h1>Edycja</h1>
+
+<h4 class="text-center">Raport</h4>
+<hr />
+<div class="row justify-content-center align-items-center">
+    <div class="col-md-4 text-center">
+        <form asp-action="EditConfirmed">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label for="day">Dzień tygodnia:</label>
+                <select id="day" name="day" class="form-control">
+                    <option value="1">Poniedziałek</option>
+                    <option value="2">Wtorek</option>
+                    <option value="3">Środa</option>
+                    <option value="4">Czwartek</option>
+                    <option value="5">Piątek</option>
+                    <option value="6">Sobota</option>
+                    <option value="0">Niedziela</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="username">Nazwa użytkownika:</label>
+                <input type="text" id="username" class="form-control" value="@ViewBag.UserName" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="StartProductionTime"></label>
+                <input asp-for="StartProductionTime" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="EndProductionTime"></label>
+                <input asp-for="EndProductionTime" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.ProductName" class="control-label"></label><br />
+                <select style="width: 100%" asp-for="Product.ProductName" asp-items="ViewBag.ProductList"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Containers.Type" class="control-label"></label><br />
+                <select style="width: 100%" asp-for="Containers.Type" asp-items="ViewBag.ContainerList"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity"></label>
+                <input asp-for="Quantity" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Comments"></label>
+                <textarea asp-for="Comments" class="form-control" style="height: 150px;"></textarea>
+            </div>
+            <div class="form-group">
+
+                <input type="submit" value="Dodaj" class="btn btn-primary mt-3" />
+                <input type="button" value="Powrót do listy" class="btn btn-primary mt-3" onclick="location.href='@Url.Action("Index", "Raport" )'" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    @*<a asp-action="Index">Back to List</a>*@
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

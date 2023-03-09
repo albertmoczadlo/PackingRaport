@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using PackingRaport.Domain.Models;
-
+using PackingRaport.ViewModels;
 
 namespace PackingRaport.Profiles
 {
@@ -8,12 +8,7 @@ namespace PackingRaport.Profiles
     {
         public RaportProfile()
         {
-           
-
-            //CreateMap<Product, ProductDto>();
-            //CreateMap<Container, ContainerDto>();
-            //CreateMap<Tank, TankDto>();
-
+            CreateMap<Raport, RaportViewModel>().ReverseMap();
         }
     }
 }
