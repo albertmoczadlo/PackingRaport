@@ -1,17 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PackingRaport.Domain.InterfaceRepository;
 using PackingRaport.Domain.Models;
-using PackingRaport.Infrastructure.InterfaceRepository;
 using System.Security.Claims;
 using AutoMapper;
-using PackingRaport.Domain.ViewModels;
 using PackingRaport.Helpers;
 using PackingRaport.Persistance.Context;
 using PackingRaport.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System.Drawing.Printing;
+using PackingRaport.ViewModels;
 
 namespace PackingRaport.Controllers
 {
@@ -20,14 +17,16 @@ namespace PackingRaport.Controllers
         private readonly IRaportRepositories _raportRepositories;
         private readonly IUserRepository _userRepository;
         private readonly IRaportServices _raportServices;
+        private readonly IMapper _mapper;
 
         PackingRaportHelpers _helpers = new PackingRaportHelpers();
         public RaportController(IRaportRepositories raportRepositories, IUserRepository userRepository,
-            IRaportServices raportServices, RaportDbContext dbContext)
+            IRaportServices raportServices, RaportDbContext dbContext, IMapper mapper)
         {
             _raportRepositories = raportRepositories;
             _userRepository = userRepository;
             _raportServices = raportServices;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -105,7 +104,7 @@ namespace PackingRaport.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateConfirmed(RaportViewModel raport)
+        public IActionResult CreateConfirmed(Raport raport)
         {
             if (!ModelState.IsValid)
             {
@@ -138,5 +137,87 @@ namespace PackingRaport.Controllers
             return View(result);
         }
 
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var raport = _raportRepositories.GetById(id);
+
+            RaportViewModel raportViewModel = _mapper.Map<RaportViewModel>(raport);
+
+            return View(raportViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var raport = _raportRepositories.GetById(id);
+
+            if (raport == null)
+            {
+                return NotFound();
+            }
+
+            _raportRepositories.RemoveRaport(raport);
+
+            return RedirectToAction("Index");
+        }
+
+
+        public IActionResult Edit(int id)
+        {
+            var result = _raportRepositories.GetById(id);
+
+            ViewBag.UserName = _raportServices.GetUser(id);
+            ViewBag.ProductName = _raportServices.GetProduct(id);
+            ViewBag.Container = _raportServices.GetContainers(id);
+
+
+            return View(result);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditConfirmed(Raport raport, int id)
+        {
+            var existingRaport = _raportRepositories.GetById(id);
+
+            existingRaport.Day = raport.Day;
+            existingRaport.StartProductionTime = raport.StartProductionTime;
+            existingRaport.EndProductionTime = raport.EndProductionTime;
+            existingRaport.Quantity = raport.Quantity;
+            existingRaport.Product = raport.Product;
+            existingRaport.Containers = raport.Containers;
+            existingRaport.Comments = raport.Comments;
+
+            _raportRepositories.Update(existingRaport);
+
+            return RedirectToAction("Index");
+        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult EditConfirmed(Raport raport, int id)
+        //{
+        //    //var result = _raportRepositories.GetById(raport.Id);
+
+        //    ViewBag.UserName = _raportServices.GetUser(id);
+        //    ViewBag.ProductName = _raportServices.GetProduct(id);
+        //    ViewBag.Container = _raportServices.GetContainers(id);
+
+        //    //_raportServices.UpdateRaport(result);
+
+        //    _raportServices.UpdateRaport(raport);
+
+        //    return RedirectToAction("Index");
+
+        //    return RedirectToAction("Index");
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult EditConfirmed(int? id)
+        //{
+
+        //}
     }
 }

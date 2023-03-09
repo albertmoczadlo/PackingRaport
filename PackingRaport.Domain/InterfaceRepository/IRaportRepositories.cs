@@ -14,6 +14,8 @@ namespace PackingRaport.Domain.InterfaceRepository
         void AddRaport(Raport raport);
         IEnumerable<Container> GetContainers();
 
+        void RemoveRaport(Raport raport);
+        void Update(Raport raport);
        
     }
 }

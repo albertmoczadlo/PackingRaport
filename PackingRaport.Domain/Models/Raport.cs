@@ -14,7 +14,6 @@ namespace PackingRaport.Domain.Models
         [DisplayName("Dzień tygodnia")]
         public DayOfWeek Day { get; set; }
         [DisplayName("Start")]
-        [Required]
         [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime StartProductionTime { get; set; }
 
@@ -22,11 +21,11 @@ namespace PackingRaport.Domain.Models
         public DateTime? EndProductionTime { get; set; }
         public string UserId { get; set; }
         [DisplayName("Ilość")]
-        [Range(0, 1000000, ErrorMessage = "Value must be between 0 and 1,000,000.")]
+        [Range(0, 10000000, ErrorMessage = "Value must be between 0 and 1,000,000.")]
         public int Quantity { get; set; }
         [DisplayName("Uwagi")]
         public string Comments { get; set; }
-       
+
 
         public User User { get; set; }
         public Product Product { get; set; }
