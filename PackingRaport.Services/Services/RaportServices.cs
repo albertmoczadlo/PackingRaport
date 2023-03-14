@@ -15,7 +15,7 @@ namespace PackingRaport.Services.Services
         private readonly IRaportRepositories _raportRepositories;
         private readonly IUserRepository _userRepository;
         private readonly IProductRepository _productRepository;
-        private readonly RaportDbContext _context; 
+        private readonly RaportDbContext _context;
 
         public RaportServices(IRaportRepositories raportRepositories, IUserRepository userRepository,
             IProductRepository productRepository)
@@ -65,7 +65,7 @@ namespace PackingRaport.Services.Services
             var result = _raportRepositories.GetById(id);
             var product = _productRepository.GetProducts()
                 .Where(x => x.RaportId == result.Id)
-                .Select(x => $"{x.ProductName.ToString()}")
+                .Select(x => $"{x.ProductName}")
                 .FirstOrDefault();
             return product;
         }
@@ -74,7 +74,7 @@ namespace PackingRaport.Services.Services
         {
             var containers = _raportRepositories.GetContainers()
                 .Where(x => x.RaportId == id)
-                .Select(x => $"{x.Type.ToString()}")
+                .Select(x => $"{x.Type}")
                 .FirstOrDefault();
             return containers;
         }
