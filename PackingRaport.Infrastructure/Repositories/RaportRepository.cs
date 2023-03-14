@@ -36,7 +36,12 @@ namespace PackingRaport.Infrastructure.InterfaceRepository
 
         public Raport GetById(int id)
         {
-            var raport = _context.Raports.Find(id);
+            var raport = _context.Raports
+                .Include(x => x.User)
+                .Include(p => p.Product)
+                .Include(c => c.Containers)
+                .FirstOrDefault();
+                
 
             if (raport == null)
             {

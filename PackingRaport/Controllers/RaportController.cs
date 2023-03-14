@@ -168,9 +168,25 @@ namespace PackingRaport.Controllers
         {
             var result = _raportRepositories.GetById(id);
 
+            
+
             ViewBag.UserName = _raportServices.GetUser(id);
-            ViewBag.ProductName = _raportServices.GetProduct(id);
-            ViewBag.Container = _raportServices.GetContainers(id);
+            //ViewBag.ProductList = new SelectList(result.);
+            //ViewBag.Container = _raportServices.GetContainers(id);
+
+            ViewBag.ProductList = Enum.GetValues(typeof(TypeProduct)).Cast<TypeProduct>().Select(x => new SelectListItem
+            {
+                Text = x.ToString(),
+                Value = x.ToString(),
+                Selected = result.Product.ProductName == x
+            })
+            .ToList();
+
+            ViewBag.ContainerList = Enum.GetValues(typeof(TypeContainer)).Cast<TypeContainer>().Select(c => new SelectListItem
+            {
+                Text = c.ToString(),
+                Value = ((int)c).ToString()
+            }).ToList();
 
 
             return View(result);
